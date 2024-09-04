@@ -1,11 +1,11 @@
-package xyz.geik.farmer.modules.geyser;
+package xyz.geik.farmer.modules.sellcommand;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import xyz.geik.farmer.Main;
 import xyz.geik.farmer.modules.FarmerModule;
-import xyz.geik.farmer.modules.geyser.commands.GeyserCommand;
-import xyz.geik.farmer.modules.geyser.configuration.ConfigFile;
+import xyz.geik.farmer.modules.sellcommand.commands.MainCommand;
+import xyz.geik.farmer.modules.sellcommand.configuration.ConfigFile;
 import xyz.geik.farmer.shades.storage.Config;
 import xyz.geik.glib.GLib;
 import xyz.geik.glib.chat.ChatUtils;
@@ -18,18 +18,18 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Geyser module main class
+ * SellCommand module main class
  */
 @Getter
-public class Geyser extends FarmerModule {
+public class SellCommand extends FarmerModule {
 
     /**
      * Constructor of class
      */
-    public Geyser() {}
+    public SellCommand() {}
 
     @Getter
-    private static Geyser instance;
+    private static SellCommand instance;
 
     private Config langFile;
 
@@ -45,18 +45,18 @@ public class Geyser extends FarmerModule {
      */
     public void onEnable() {
         instance = this;
-        if (!configFile.isStatus())
-            this.setEnabled(false);
+        Bukkit.broadcastMessage(Main.getConfigFile().getSettings().getLang());
+        Bukkit.broadcastMessage(getName());
         this.setLang(Main.getConfigFile().getSettings().getLang(), Main.getInstance());
         setupFile();
 
         if (configFile.isStatus()) {
-            Main.getCommandManager().registerCommand(new GeyserCommand());
+            Main.getCommandManager().registerCommand(new MainCommand());
             // Adds all the replaces to the replacer
             if (!configFile.getSellAllCommands().isEmpty())
                 sellAllCommands.addAll(configFile.getSellAllCommands());
             try {
-                Geyser.getInstance().getLang().getTextList("sellReplace").forEach(element -> {
+                SellCommand.getInstance().getLang().getTextList("sellReplace").forEach(element -> {
                     String[] parts = element.split(":");
                     nameReplacer.put(parts[0], parts[1]);
                 });
@@ -64,6 +64,7 @@ public class Geyser extends FarmerModule {
             catch (Exception ignored) {}
         }
         else {
+            this.setEnabled(false);
             String messagex = "&3[" + GLib.getInstance().getName() + "] &c" + getName() + " is not loaded.";
             ChatUtils.sendMessage(Bukkit.getConsoleSender(), messagex);
         }

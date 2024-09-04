@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>xyz.geik.farmer</groupId>
-    <artifactId>Farmer-Geyser</artifactId>
+    <artifactId>Farmer-SellCommand</artifactId>
     <version>1.0.0</version>
 
     <properties>

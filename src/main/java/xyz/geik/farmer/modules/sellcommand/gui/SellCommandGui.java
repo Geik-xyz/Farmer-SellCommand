@@ -1,4 +1,4 @@
-package xyz.geik.farmer.modules.geyser.gui;
+package xyz.geik.farmer.modules.sellcommand.gui;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -17,14 +17,14 @@ import xyz.geik.glib.shades.inventorygui.StaticGuiElement;
 import xyz.geik.glib.shades.xseries.XMaterial;
 
 /**
- * GeyserGui which execute if player is geyser player
+ * SellCommandGui which execute if player is geyser player
  */
-public class GeyserGui {
+public class SellCommandGui {
 
     /**
      * Constructor of class
      */
-    public GeyserGui() {}
+    public SellCommandGui() {}
 
     /**
      * Opens gui to player

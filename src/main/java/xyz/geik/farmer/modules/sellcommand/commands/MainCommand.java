@@ -1,4 +1,4 @@
-package xyz.geik.farmer.modules.geyser.commands;
+package xyz.geik.farmer.modules.sellcommand.commands;
 
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -10,13 +10,14 @@ import org.jetbrains.annotations.Nullable;
 import xyz.geik.farmer.Main;
 import xyz.geik.farmer.api.handlers.FarmerItemSellEvent;
 import xyz.geik.farmer.api.managers.FarmerManager;
+import xyz.geik.farmer.helpers.ModuleHelper;
 import xyz.geik.farmer.model.Farmer;
 import xyz.geik.farmer.model.inventory.FarmerInv;
 import xyz.geik.farmer.model.inventory.FarmerItem;
 import xyz.geik.farmer.model.user.FarmerPerm;
-import xyz.geik.farmer.modules.geyser.Geyser;
+import xyz.geik.farmer.modules.FarmerModule;
+import xyz.geik.farmer.modules.sellcommand.SellCommand;
 import xyz.geik.glib.chat.ChatUtils;
-import xyz.geik.glib.module.ModuleManager;
 import xyz.geik.glib.shades.triumphteam.cmd.core.BaseCommand;
 import xyz.geik.glib.shades.triumphteam.cmd.core.annotation.Command;
 import xyz.geik.glib.shades.triumphteam.cmd.core.annotation.Default;
@@ -26,13 +27,13 @@ import xyz.geik.glib.shades.xseries.XMaterial;
 import java.util.Locale;
 
 /**
- * Geyser Commands
+ * SellCommand Commands
  *
  * @author geyik
  */
 @RequiredArgsConstructor
 @Command(value = "farmer", alias = {"farm", "çiftçi", "fm", "ciftci"})
-public class GeyserCommand extends BaseCommand {
+public class MainCommand extends BaseCommand {
 
     /**
      * Base command
@@ -50,8 +51,11 @@ public class GeyserCommand extends BaseCommand {
      */
     @SubCommand(value = "sell", alias = {"sat"})
     public void sellCommand(CommandSender sender, String item) {
-        if (!ModuleManager.getModule("Geyser").isEnabled()) {
-            sender.sendMessage(Geyser.getInstance().getLang().getText("geyserDisabled"));
+        FarmerModule module = ModuleHelper.getInstance().getModule("MainCommand");
+        if (module == null) return;
+
+        if (!module.isEnabled()) {
+            sender.sendMessage(SellCommand.getInstance().getLang().getText("geyserDisabled"));
             return;
         }
         // Checks if sender instanceof player
@@ -67,7 +71,7 @@ public class GeyserCommand extends BaseCommand {
                 return;
             Farmer farmer = FarmerManager.getFarmers().get(regionID);
             // Sell All command
-            if (Geyser.getSellAllCommands().stream().anyMatch(cmd -> cmd.equalsIgnoreCase(item)))
+            if (SellCommand.getSellAllCommands().stream().anyMatch(cmd -> cmd.equalsIgnoreCase(item)))
                 executeSellEvent(farmer, player, null);
                 // Sell only one item command
             else
@@ -93,13 +97,13 @@ public class GeyserCommand extends BaseCommand {
             // Sells only one item
             if (item != null) {
                 if (player.hasPermission("farmer.sell." + item.toLowerCase(Locale.ROOT))) {
-                    if (Geyser.getNameReplacer().containsKey(item))
-                        item = Geyser.getNameReplacer().get(item);
+                    if (SellCommand.getNameReplacer().containsKey(item))
+                        item = SellCommand.getNameReplacer().get(item);
                     String checkMaterial = item;
                     // If default items does not contain the material
                     if (FarmerInv.defaultItems.stream()
                             .noneMatch(defaultItem -> defaultItem.getMaterial().toString().equalsIgnoreCase(checkMaterial))) {
-                        player.sendMessage(Geyser.getInstance().getLang().getText("cantFindTheItem"));
+                        player.sendMessage(SellCommand.getInstance().getLang().getText("cantFindTheItem") + " seold");
                         return;
                     }
                     FarmerItem toSell = farmer.getInv().getStockedItem(XMaterial.valueOf(item.toUpperCase(Locale.ENGLISH)));
@@ -116,7 +120,7 @@ public class GeyserCommand extends BaseCommand {
             }
         }
         // Execute when couldn't be returned
-        player.sendMessage(Geyser.getInstance().getLangFile().getText("noPerm"));
+        player.sendMessage(SellCommand.getInstance().getLangFile().getText("noPerm") + " no perm");
     }
 
     /**
@@ -124,7 +128,7 @@ public class GeyserCommand extends BaseCommand {
      * @param player who will receive message
      */
     private void sendNoPermMessage(Player player) {
-        player.sendMessage(Geyser.getInstance().getLangFile().getText("noPerm"));
+        player.sendMessage(SellCommand.getInstance().getLangFile().getText("noPerm"));
     }
 
     /**

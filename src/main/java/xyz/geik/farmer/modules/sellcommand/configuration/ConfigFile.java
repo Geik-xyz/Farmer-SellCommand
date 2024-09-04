@@ -1,4 +1,4 @@
-package xyz.geik.farmer.modules.geyser.configuration;
+package xyz.geik.farmer.modules.sellcommand.configuration;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ import java.util.List;
 @Names(strategy = NameStrategy.IDENTITY)
 public class ConfigFile extends OkaeriConfig {
 
-    @Comment({"if you want to use geyser module",
+    @Comment({"if you want to use sell command module",
             "set feature to true."})
     private boolean status = false;
 
