@@ -60,6 +60,9 @@ public class SellCommand extends FarmerModule {
                 });
             }
             catch (Exception ignored) {}
+
+            String messagex = "&3[" + GLib.getInstance().getName() + "] &a" + getName() + " enabled.";
+            ChatUtils.sendMessage(Bukkit.getConsoleSender(), messagex);
         }
         else {
             this.setEnabled(false);
