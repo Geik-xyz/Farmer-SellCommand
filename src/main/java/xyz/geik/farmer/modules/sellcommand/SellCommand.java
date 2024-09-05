@@ -45,8 +45,6 @@ public class SellCommand extends FarmerModule {
      */
     public void onEnable() {
         instance = this;
-        Bukkit.broadcastMessage(Main.getConfigFile().getSettings().getLang());
-        Bukkit.broadcastMessage(getName());
         this.setLang(Main.getConfigFile().getSettings().getLang(), Main.getInstance());
         setupFile();
 

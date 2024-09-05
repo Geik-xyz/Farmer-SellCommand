@@ -51,7 +51,7 @@ public class MainCommand extends BaseCommand {
      */
     @SubCommand(value = "sell", alias = {"sat"})
     public void sellCommand(CommandSender sender, String item) {
-        FarmerModule module = ModuleHelper.getInstance().getModule("MainCommand");
+        FarmerModule module = ModuleHelper.getInstance().getModule("SellCommand");
         if (module == null) return;
 
         if (!module.isEnabled()) {
@@ -120,7 +120,7 @@ public class MainCommand extends BaseCommand {
             }
         }
         // Execute when couldn't be returned
-        player.sendMessage(SellCommand.getInstance().getLangFile().getText("noPerm") + " no perm");
+        player.sendMessage(SellCommand.getInstance().getLang().getText("noPerm") + " no perm");
     }
 
     /**
@@ -128,7 +128,7 @@ public class MainCommand extends BaseCommand {
      * @param player who will receive message
      */
     private void sendNoPermMessage(Player player) {
-        player.sendMessage(SellCommand.getInstance().getLangFile().getText("noPerm"));
+        player.sendMessage(SellCommand.getInstance().getLang().getText("noPerm"));
     }
 
     /**

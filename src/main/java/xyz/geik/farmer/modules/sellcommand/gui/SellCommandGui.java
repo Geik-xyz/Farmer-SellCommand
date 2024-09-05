@@ -1,6 +1,5 @@
 package xyz.geik.farmer.modules.sellcommand.gui;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.geik.farmer.Main;
 import xyz.geik.farmer.api.handlers.FarmerItemSellEvent;
+import xyz.geik.farmer.helpers.PlaceholderHelper;
 import xyz.geik.farmer.helpers.gui.GuiHelper;
 import xyz.geik.farmer.model.Farmer;
 import xyz.geik.farmer.model.inventory.FarmerItem;
@@ -34,7 +34,7 @@ public class SellCommandGui {
         // Gui template as array
         String[] geyserGui = Main.getConfigFile().getGui().getGeyserLayout().toArray(new String[0]);
         // Inventory object
-        InventoryGui gui = new InventoryGui(Main.getInstance(), null, PlaceholderAPI.setPlaceholders(null, ChatUtils.color(Main.getLangFile().getGui().getGeyserGui().getGuiName())), geyserGui);
+        InventoryGui gui = new InventoryGui(Main.getInstance(), null, PlaceholderHelper.parsePlaceholders(player, ChatUtils.color(Main.getLangFile().getGui().getGeyserGui().getGuiName())), geyserGui);
         // Filler item for empty slots
         gui.setFiller(GuiHelper.getFiller(player));
         // Left item placer
