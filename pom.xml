@@ -33,9 +33,9 @@
         </dependency>
         <!-- Farmer -->
         <dependency>
-            <groupId>com.github.WaterArchery</groupId>
+            <groupId>com.github.Geik-xyz</groupId>
             <artifactId>Farmer-v6</artifactId>
-            <version>991a36fc39</version>
+            <version>v6-b108</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
