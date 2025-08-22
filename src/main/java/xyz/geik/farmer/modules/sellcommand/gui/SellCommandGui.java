@@ -11,10 +11,13 @@ import xyz.geik.farmer.helpers.PlaceholderHelper;
 import xyz.geik.farmer.helpers.gui.GuiHelper;
 import xyz.geik.farmer.model.Farmer;
 import xyz.geik.farmer.model.inventory.FarmerItem;
+import xyz.geik.farmer.modules.sellcommand.SellCommand;
 import xyz.geik.glib.chat.ChatUtils;
 import xyz.geik.glib.shades.inventorygui.InventoryGui;
 import xyz.geik.glib.shades.inventorygui.StaticGuiElement;
 import xyz.geik.glib.shades.xseries.XMaterial;
+
+import java.util.List;
 
 /**
  * SellCommandGui which execute if player is geyser player
@@ -34,14 +37,14 @@ public class SellCommandGui {
         // Gui template as array
         String[] geyserGui = Main.getConfigFile().getGui().getGeyserLayout().toArray(new String[0]);
         // Inventory object
-        InventoryGui gui = new InventoryGui(Main.getInstance(), null, PlaceholderHelper.parsePlaceholders(player, ChatUtils.color(Main.getLangFile().getGui().getGeyserGui().getGuiName())), geyserGui);
+        InventoryGui gui = new InventoryGui(Main.getInstance(), null, PlaceholderHelper.parsePlaceholders(player, ChatUtils.color(SellCommand.getInstance().getConfigFile().getGeyserGui().getGuiName())), geyserGui);
         // Filler item for empty slots
         gui.setFiller(GuiHelper.getFiller(player));
         // Left item placer
 
         gui.addElement(new StaticGuiElement('l',
                 // Item here
-                GuiHelper.getGeyserGuiLeftItem(),
+                getGeyserGuiLeftItem(),
                 1,
                 click -> {
                     // If inventory full returns
@@ -80,7 +83,7 @@ public class SellCommandGui {
 
         gui.addElement(new StaticGuiElement('r',
                 // Item here
-                GuiHelper.getGeyserGuiRightItem(),
+                getGeyserGuiRightItem(),
                 1,
                 click -> {
                     // If inventory full returns
@@ -122,7 +125,7 @@ public class SellCommandGui {
 
         gui.addElement(new StaticGuiElement('s',
                 // Item here
-                GuiHelper.getGeyserGuiShiftRightItem(),
+                getGeyserGuiShiftRightItem(),
                 1,
                 click -> {
                     if (slotItem.getPrice() < 0)
@@ -163,5 +166,48 @@ public class SellCommandGui {
                 continue;
         }
         return count;
+    }
+
+    public static @NotNull ItemStack getGeyserGuiLeftItem() {
+        ItemStack result;
+        String name = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getLeftClick().getName();
+        List<String> lore = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getLeftClick().getLore();
+        int modelData = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getLeftClick().getModelData();
+        String material = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getLeftClick().getMaterial();
+        boolean hasGlow = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getLeftClick().isHasGlow();
+        result = GuiHelper.getItem(name, lore, modelData, material, hasGlow, null);
+        return result;
+    }
+
+    /**
+     * RightClickItem in geyser menu
+     *
+     * @return ItemStack of rightClick icon
+     */
+    public static @NotNull ItemStack getGeyserGuiRightItem() {
+        ItemStack result;
+        String name = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getRightClick().getName();
+        List<String> lore = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getRightClick().getLore();
+        int modelData = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getRightClick().getModelData();
+        String material = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getRightClick().getMaterial();
+        boolean hasGlow = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getRightClick().isHasGlow();
+        result = GuiHelper.getItem(name, lore, modelData, material, hasGlow, null);
+        return result;
+    }
+
+    /**
+     * shiftRightClickItem in geyser menu
+     *
+     * @return ItemStack of shiftRightClick icon
+     */
+    public static @NotNull ItemStack getGeyserGuiShiftRightItem() {
+        ItemStack result;
+        String name = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getShiftRightClick().getName();
+        List<String> lore = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getShiftRightClick().getLore();
+        int modelData = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getShiftRightClick().getModelData();
+        String material = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getShiftRightClick().getMaterial();
+        boolean hasGlow = SellCommand.getInstance().getConfigFile().getGeyserGui().getItems().getShiftRightClick().isHasGlow();
+        result = GuiHelper.getItem(name, lore, modelData, material, hasGlow, null);
+        return result;
     }
 }

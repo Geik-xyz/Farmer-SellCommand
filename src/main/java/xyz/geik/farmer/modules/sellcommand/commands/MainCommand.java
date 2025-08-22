@@ -55,7 +55,7 @@ public class MainCommand extends BaseCommand {
         if (module == null) return;
 
         if (!module.isEnabled()) {
-            sender.sendMessage(SellCommand.getInstance().getLang().getText("geyserDisabled"));
+            ChatUtils.sendMessage(sender, SellCommand.getInstance().getLang().getString("geyserDisabled"));
             return;
         }
         // Checks if sender instanceof player
@@ -103,7 +103,7 @@ public class MainCommand extends BaseCommand {
                     // If default items does not contain the material
                     if (FarmerInv.defaultItems.stream()
                             .noneMatch(defaultItem -> defaultItem.getMaterial().toString().equalsIgnoreCase(checkMaterial))) {
-                        player.sendMessage(SellCommand.getInstance().getLang().getText("cantFindTheItem") + " seold");
+                        ChatUtils.sendMessage(player, SellCommand.getInstance().getLang().getString("cantFindTheItem"));
                         return;
                     }
                     FarmerItem toSell = farmer.getInv().getStockedItem(XMaterial.valueOf(item.toUpperCase(Locale.ENGLISH)));
@@ -120,15 +120,7 @@ public class MainCommand extends BaseCommand {
             }
         }
         // Execute when couldn't be returned
-        player.sendMessage(SellCommand.getInstance().getLang().getText("noPerm") + " no perm");
-    }
-
-    /**
-     * Sends no perm message to player
-     * @param player who will receive message
-     */
-    private void sendNoPermMessage(Player player) {
-        player.sendMessage(SellCommand.getInstance().getLang().getText("noPerm"));
+        ChatUtils.sendMessage(player, SellCommand.getInstance().getLang().getString("noPerm"));
     }
 
     /**

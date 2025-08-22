@@ -54,7 +54,7 @@ public class SellCommand extends FarmerModule {
             if (!configFile.getSellAllCommands().isEmpty())
                 sellAllCommands.addAll(configFile.getSellAllCommands());
             try {
-                SellCommand.getInstance().getLang().getTextList("sellReplace").forEach(element -> {
+                SellCommand.getInstance().getLang().getStringList("sellReplace").forEach(element -> {
                     String[] parts = element.split(":");
                     nameReplacer.put(parts[0], parts[1]);
                 });
